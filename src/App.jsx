@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+
 import {
   ArrowDown,
   ArrowRight,
@@ -22,9 +23,9 @@ function App() {
 
       {/* Decorative Elements */}
       <section className="relative overflow-hidden bg-black">
-        <div className="pointer-events-none absolute -bottom-60 -left-40 h-[500px] w-[500px] rounded-full border border-orange-500/10" />
+        <div className="pointer-events-none absolute -bottom-60 -left-40 h-[500px] w-[500px] rounded-full border border-[#F29925]/10" />
 
-        <div className="pointer-events-none absolute right-[25%] top-[25%] h-2 w-2 rounded-full bg-orange-500" />
+        <div className="pointer-events-none absolute right-[25%] top-[25%] h-2 w-2 rounded-full bg-[#F29925]" />
 
         <div className="relative mx-auto max-w-7xl px-5">
           {/* =========================
@@ -37,18 +38,18 @@ function App() {
             <div className="hidden items-center gap-6 text-[10px] font-bold tracking-[0.18em] text-white/40 md:flex">
               <span>REAL ESTATE</span>
 
-              <span className="text-orange-500">•</span>
+              <span className="text-[#F29925]">•</span>
 
               <span>DIGITAL MARKETING</span>
 
-              <span className="text-orange-500">•</span>
+              <span className="text-[#F29925]">•</span>
 
               <span>BUSINESS</span>
             </div>
 
             <a
               href="#register"
-              className="rounded-full border border-white/15 px-5 py-2.5 text-xs font-bold text-white transition hover:border-orange-500 hover:bg-orange-500"
+              className="rounded-full border border-white/15 px-5 py-2.5 text-xs font-bold text-white transition hover:border-[#F29925] hover:bg-[#F29925]"
             >
               Register
             </a>
@@ -66,10 +67,10 @@ function App() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/10 px-4 py-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
+              <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-[#F29925]/20 bg-[#F29925]/10 px-4 py-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#F29925]" />
 
-                <span className="text-[9px] font-bold tracking-[0.22em] text-orange-300">
+                <span className="text-[9px] font-bold tracking-[0.22em] text-[#F29925]">
                   WELCOME TO GLOBAL ICON
                 </span>
               </div>
@@ -78,10 +79,9 @@ function App() {
                 Build.
                 <br />
 
-                <span className="text-orange-500">Learn.</span>
+                <span className="text-[#F29925]">Learn.</span>
 
                 <br />
-
                 Become.
               </h1>
 
@@ -94,7 +94,7 @@ function App() {
               <div className="mt-9 flex flex-wrap gap-3">
                 <a
                   href="#register"
-                  className="group flex items-center gap-3 rounded-xl bg-orange-500 px-6 py-4 text-sm font-bold text-white transition hover:bg-orange-400"
+                  className="group flex items-center gap-3 rounded-xl bg-[#F29925] px-6 py-4 text-sm font-bold text-white transition hover:bg-[#F29925]"
                 >
                   Start your journey
 
@@ -146,9 +146,9 @@ function App() {
               <div className="relative mx-auto h-[480px] w-[480px]">
                 <div className="absolute inset-0 rounded-[45px] border border-white/10 bg-white/[0.02] backdrop-blur-sm" />
 
-                <div className="absolute left-16 top-16 h-64 w-64 rounded-full bg-orange-500/20 blur-[90px]" />
+                <div className="absolute left-16 top-16 h-64 w-64 rounded-full bg-[#F29925]/20 blur-[90px]" />
 
-                <div className="absolute inset-10 rounded-[35px] border border-orange-500/10" />
+                <div className="absolute inset-10 rounded-[35px] border border-[#F29925]/10" />
 
                 <div className="absolute inset-20 flex items-center justify-center rounded-[30px] border border-white/10 bg-black/40">
                   <img
@@ -169,7 +169,7 @@ function App() {
                 >
                   <ShieldCheck
                     size={28}
-                    className="text-orange-500"
+                    className="text-[#F29925]"
                   />
                 </motion.div>
 
@@ -182,7 +182,7 @@ function App() {
                   }}
                   className="absolute -bottom-4 left-2 rounded-2xl border border-white/10 bg-white/10 px-5 py-4 backdrop-blur-xl"
                 >
-                  <p className="text-[9px] font-bold tracking-[0.2em] text-orange-400">
+                  <p className="text-[9px] font-bold tracking-[0.2em] text-[#F29925]">
                     GLOBAL ICON
                   </p>
 
@@ -215,7 +215,7 @@ function App() {
             {/* TEXT */}
 
             <div>
-              <p className="text-[10px] font-bold tracking-[0.22em] text-orange-500">
+              <p className="text-[10px] font-bold tracking-[0.22em] text-[#F29925]">
                 OUR PROGRAMMES
               </p>
 
@@ -261,7 +261,7 @@ function App() {
       >
         <div className="mx-auto max-w-6xl">
           <div className="mb-12 text-center">
-            <p className="text-[10px] font-bold tracking-[0.22em] text-orange-500">
+            <p className="text-[10px] font-bold tracking-[0.22em] text-[#F29925]">
               TAKE THE FIRST STEP
             </p>
 
@@ -334,18 +334,14 @@ function App() {
 function Stat({ icon, value, label }) {
   return (
     <div className="flex items-center gap-3">
-      <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-orange-500">
+      <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-[#F29925]">
         {icon}
       </div>
 
       <div>
-        <p className="text-xs font-semibold text-white">
-          {value}
-        </p>
+        <p className="text-xs font-semibold text-white">{value}</p>
 
-        <p className="text-[10px] text-white/30">
-          {label}
-        </p>
+        <p className="text-[10px] text-white/30">{label}</p>
       </div>
     </div>
   );
@@ -367,7 +363,7 @@ function ProgrammeCard({
       transition={{ duration: 0.25 }}
       className={`rounded-2xl border p-7 ${
         featured
-          ? "border-orange-500 bg-orange-500 text-white shadow-xl shadow-orange-500/20"
+          ? "border-[#F29925] bg-[#F29925] text-white shadow-xl shadow-[#F29925]/20"
           : "border-neutral-200 bg-neutral-50 text-neutral-950"
       }`}
     >
@@ -383,9 +379,7 @@ function ProgrammeCard({
         <CheckCircle2
           size={20}
           className={
-            featured
-              ? "text-white"
-              : "text-orange-500"
+            featured ? "text-white" : "text-[#F29925]"
           }
         />
       </div>
@@ -396,9 +390,7 @@ function ProgrammeCard({
 
       <p
         className={`mt-3 text-sm leading-6 ${
-          featured
-            ? "text-white/70"
-            : "text-neutral-500"
+          featured ? "text-white/70" : "text-neutral-500"
         }`}
       >
         {description}

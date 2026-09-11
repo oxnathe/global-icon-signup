@@ -75,16 +75,11 @@ export default function RegistrationForm() {
     const registrationData = {
       full_name: data.fullName,
       name: data.fullName,
-
       email: data.email,
-
       phone: data.phone,
-
       city: data.city,
-
       programme:
         selectedProgram?.name || selectedPackage,
-
       registration_date: new Date().toLocaleString(),
     };
 
@@ -140,9 +135,9 @@ export default function RegistrationForm() {
     }
   };
 
-  /*
-   * SUCCESS STATE
-   */
+  /* =========================
+     SUCCESS STATE
+  ========================== */
 
   if (submitted) {
     return (
@@ -157,15 +152,15 @@ export default function RegistrationForm() {
         }}
         className="rounded-3xl border border-neutral-200 bg-white px-6 py-14 text-center shadow-2xl shadow-black/5 md:px-12"
       >
-        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-orange-100">
+        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#F29925]/10">
           <CheckCircle2
             size={40}
             strokeWidth={1.7}
-            className="text-orange-500"
+            className="text-[#F29925]"
           />
         </div>
 
-        <p className="mt-7 text-xs font-bold uppercase tracking-[0.2em] text-orange-500">
+        <p className="mt-7 text-xs font-bold uppercase tracking-[0.2em] text-[#F29925]">
           Registration complete
         </p>
 
@@ -193,7 +188,7 @@ export default function RegistrationForm() {
 
             setSubmitted(false);
           }}
-          className="mt-8 rounded-xl bg-black px-7 py-3.5 text-sm font-bold text-white transition hover:bg-orange-500"
+          className="mt-8 rounded-xl bg-black px-7 py-3.5 text-sm font-bold text-white transition hover:bg-[#F29925]"
         >
           Back to registration
         </button>
@@ -224,9 +219,9 @@ export default function RegistrationForm() {
 
       <div className="mb-9">
         <div className="flex items-center gap-2">
-          <span className="h-1 w-8 rounded-full bg-orange-500" />
+          <span className="h-1 w-8 rounded-full bg-[#F29925]" />
 
-          <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-orange-500">
+          <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#F29925]">
             Registration
           </span>
         </div>
@@ -326,7 +321,7 @@ export default function RegistrationForm() {
         <label className="flex cursor-pointer items-start gap-3">
           <input
             type="checkbox"
-            className="mt-1 h-4 w-4 accent-orange-500"
+            className="mt-1 h-4 w-4 accent-[#F29925]"
             {...register("terms")}
           />
 
@@ -334,7 +329,7 @@ export default function RegistrationForm() {
             I agree to Global Icon's{" "}
             <a
               href="#terms"
-              className="font-semibold text-neutral-900 underline decoration-orange-500 underline-offset-2"
+              className="font-semibold text-neutral-900 underline decoration-[#F29925] underline-offset-2"
             >
               Terms & Conditions
             </a>{" "}
@@ -360,7 +355,7 @@ export default function RegistrationForm() {
         whileTap={{
           scale: 0.98,
         }}
-        className="group mt-8 flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-orange-500 px-6 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-60"
+        className="group mt-8 flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-[#F29925] px-6 text-sm font-bold text-white shadow-lg shadow-[#F29925]/20 transition hover:bg-[#F29925] disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isSubmitting ? (
           <>
