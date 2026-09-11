@@ -1,101 +1,160 @@
 import { useState } from "react";
+
 import { motion } from "framer-motion";
+
 import {
   ArrowRight,
   CheckCircle2,
-  Eye,
-  EyeOff,
   LockKeyhole,
 } from "lucide-react";
 
+import emailjs from "@emailjs/browser";
+
 import { useForm } from "react-hook-form";
+
 import { z } from "zod";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import InputField from "./InputField";
+
 import PackageCard from "./PackageCard";
+
 import { packages } from "../data/packages";
 
-const registrationSchema = z
-  .object({
-    fullName: z
-      .string()
-      .min(3, "Please enter your full name"),
+const registrationSchema = z.object({
+  fullName: z
+    .string()
+    .min(3, "Please enter your full name"),
 
-    email: z
-      .string()
-      .email("Please enter a valid email address"),
+  email: z
+    .string()
+    .email("Please enter a valid email address"),
 
-    phone: z
-      .string()
-      .min(7, "Please enter a valid phone number"),
+  phone: z
+    .string()
+    .min(7, "Please enter a valid phone number"),
 
-    city: z
-      .string()
-      .min(2, "Please enter your city"),
+  city: z
+    .string()
+    .min(2, "Please enter your city"),
 
-    password: z
-      .string()
-      .min(8, "Password must be at least 8 characters"),
-
-    confirmPassword: z
-      .string()
-      .min(1, "Please confirm your password"),
-
-    terms: z.boolean().refine((value) => value === true, {
-      message: "You must accept the terms and conditions",
-    }),
-  })
-  .refine(
-    (data) => data.password === data.confirmPassword,
-    {
-      message: "Passwords do not match",
-      path: ["confirmPassword"],
-    }
-  );
+  terms: z.boolean().refine((value) => value === true, {
+    message: "You must accept the terms and conditions",
+  }),
+});
 
 export default function RegistrationForm() {
   const [selectedPackage, setSelectedPackage] =
     useState("exclusive");
-
-  const [showPassword, setShowPassword] = useState(false);
-
-  const [showConfirmPassword, setShowConfirmPassword] =
-    useState(false);
 
   const [submitted, setSubmitted] = useState(false);
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(registrationSchema),
+
     defaultValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      city: "",
       terms: false,
     },
   });
 
   const onSubmit = async (data) => {
-    const registrationData = {
-      ...data,
-      package: selectedPackage,
-    };
-
-    console.log("GLOBAL ICON REGISTRATION:", registrationData);
-
-    await new Promise((resolve) =>
-      setTimeout(resolve, 1000)
+    const selectedProgram = packages.find(
+      (pkg) => pkg.id === selectedPackage
     );
 
-    setSubmitted(true);
+    const registrationData = {
+      full_name: data.fullName,
+      name: data.fullName,
+
+      email: data.email,
+
+      phone: data.phone,
+
+      city: data.city,
+
+      programme:
+        selectedProgram?.name || selectedPackage,
+
+      registration_date: new Date().toLocaleString(),
+    };
+
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        registrationData,
+        {
+          publicKey:
+            import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        }
+      );
+
+      console.log(
+        "GLOBAL ICON REGISTRATION:",
+        registrationData
+      );
+
+      reset({
+        fullName: "",
+        email: "",
+        phone: "",
+        city: "",
+        terms: false,
+      });
+
+      setSelectedPackage("exclusive");
+
+      setSubmitted(true);
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+
+      console.error(
+        "EmailJS Status:",
+        error?.status
+      );
+
+      console.error(
+        "EmailJS Text:",
+        error?.text
+      );
+
+      alert(
+        `Email failed.\n\nStatus: ${
+          error?.status || "Unknown"
+        }\n\nError: ${
+          error?.text ||
+          error?.message ||
+          "Unknown EmailJS error"
+        }`
+      );
+    }
   };
+
+  /*
+   * SUCCESS STATE
+   */
 
   if (submitted) {
     return (
       <motion.div
-        initial={{ opacity: 0, scale: 0.96 }}
-        animate={{ opacity: 1, scale: 1 }}
+        initial={{
+          opacity: 0,
+          scale: 0.96,
+        }}
+        animate={{
+          opacity: 1,
+          scale: 1,
+        }}
         className="rounded-3xl border border-neutral-200 bg-white px-6 py-14 text-center shadow-2xl shadow-black/5 md:px-12"
       >
         <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-orange-100">
@@ -121,7 +180,19 @@ export default function RegistrationForm() {
 
         <button
           type="button"
-          onClick={() => setSubmitted(false)}
+          onClick={() => {
+            reset({
+              fullName: "",
+              email: "",
+              phone: "",
+              city: "",
+              terms: false,
+            });
+
+            setSelectedPackage("exclusive");
+
+            setSubmitted(false);
+          }}
           className="mt-8 rounded-xl bg-black px-7 py-3.5 text-sm font-bold text-white transition hover:bg-orange-500"
         >
           Back to registration
@@ -133,10 +204,20 @@ export default function RegistrationForm() {
   return (
     <motion.form
       onSubmit={handleSubmit(onSubmit)}
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7 }}
+      initial={{
+        opacity: 0,
+        y: 30,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
+      viewport={{
+        once: true,
+      }}
+      transition={{
+        duration: 0.7,
+      }}
       className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-2xl shadow-black/5 md:p-10"
     >
       {/* Header */}
@@ -151,7 +232,7 @@ export default function RegistrationForm() {
         </div>
 
         <h2 className="mt-4 font-montserrat text-2xl font-extrabold tracking-tight text-neutral-950 md:text-3xl">
-          Create your account
+          Register for Global Icon
         </h2>
 
         <p className="mt-2 max-w-lg text-sm leading-6 text-neutral-500">
@@ -160,7 +241,7 @@ export default function RegistrationForm() {
         </p>
       </div>
 
-      {/* Personal information */}
+      {/* Personal Information */}
 
       <div>
         <div className="mb-5">
@@ -239,78 +320,6 @@ export default function RegistrationForm() {
         </div>
       </div>
 
-      {/* Password */}
-
-      <div className="mt-10">
-        <div className="mb-5">
-          <h3 className="font-montserrat text-sm font-bold text-neutral-950">
-            Secure your account
-          </h3>
-
-          <div className="mt-2 h-px bg-neutral-100" />
-        </div>
-
-        <div className="grid gap-5 md:grid-cols-2">
-          <div className="relative">
-            <InputField
-              label="Password"
-              name="password"
-              type={showPassword ? "text" : "password"}
-              placeholder="Create a password"
-              required
-              error={errors.password}
-              {...register("password")}
-            />
-
-            <button
-              type="button"
-              onClick={() =>
-                setShowPassword((current) => !current)
-              }
-              className="absolute right-4 top-[39px] text-neutral-400 transition hover:text-orange-500"
-              aria-label="Toggle password visibility"
-            >
-              {showPassword ? (
-                <EyeOff size={18} />
-              ) : (
-                <Eye size={18} />
-              )}
-            </button>
-          </div>
-
-          <div className="relative">
-            <InputField
-              label="Confirm password"
-              name="confirmPassword"
-              type={
-                showConfirmPassword ? "text" : "password"
-              }
-              placeholder="Confirm your password"
-              required
-              error={errors.confirmPassword}
-              {...register("confirmPassword")}
-            />
-
-            <button
-              type="button"
-              onClick={() =>
-                setShowConfirmPassword(
-                  (current) => !current
-                )
-              }
-              className="absolute right-4 top-[39px] text-neutral-400 transition hover:text-orange-500"
-              aria-label="Toggle confirm password visibility"
-            >
-              {showConfirmPassword ? (
-                <EyeOff size={18} />
-              ) : (
-                <Eye size={18} />
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
-
       {/* Terms */}
 
       <div className="mt-8">
@@ -345,8 +354,12 @@ export default function RegistrationForm() {
       <motion.button
         type="submit"
         disabled={isSubmitting}
-        whileHover={{ scale: 1.01 }}
-        whileTap={{ scale: 0.98 }}
+        whileHover={{
+          scale: 1.01,
+        }}
+        whileTap={{
+          scale: 0.98,
+        }}
         className="group mt-8 flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-orange-500 px-6 text-sm font-bold text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {isSubmitting ? (
@@ -357,7 +370,7 @@ export default function RegistrationForm() {
           </>
         ) : (
           <>
-            Create my account
+            Register
 
             <ArrowRight
               size={18}
@@ -366,6 +379,8 @@ export default function RegistrationForm() {
           </>
         )}
       </motion.button>
+
+      {/* Secure Information */}
 
       <div className="mt-6 flex items-center justify-center gap-2 text-[11px] text-neutral-400">
         <LockKeyhole size={13} />

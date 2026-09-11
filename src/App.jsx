@@ -8,7 +8,6 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
-
 import { SocialIcon } from "react-social-icons";
 
 import BrandLogo from "./components/BrandLogo";
@@ -16,14 +15,13 @@ import RegistrationForm from "./components/RegistrationForm";
 
 function App() {
   return (
-    <main className="min-h-screen bg-[#f7f7f7]">
+    <main>
       {/* =========================
           HERO SECTION
       ========================== */}
-      <section className="gi-gradient relative overflow-hidden">
-        {/* Decorative elements */}
-        <div className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full border border-orange-500/10" />
 
+      {/* Decorative Elements */}
+      <section className="relative overflow-hidden bg-black">
         <div className="pointer-events-none absolute -bottom-60 -left-40 h-[500px] w-[500px] rounded-full border border-orange-500/10" />
 
         <div className="pointer-events-none absolute right-[25%] top-[25%] h-2 w-2 rounded-full bg-orange-500" />
@@ -32,6 +30,7 @@ function App() {
           {/* =========================
               NAVIGATION
           ========================== */}
+
           <nav className="flex items-center justify-between py-6">
             <BrandLogo dark />
 
@@ -58,8 +57,10 @@ function App() {
           {/* =========================
               HERO CONTENT
           ========================== */}
+
           <div className="grid min-h-[650px] items-center gap-16 py-16 lg:grid-cols-[1.1fr_0.9fr]">
             {/* LEFT CONTENT */}
+
             <motion.div
               initial={{ opacity: 0, x: -35 }}
               animate={{ opacity: 1, x: 0 }}
@@ -112,6 +113,7 @@ function App() {
               </div>
 
               {/* STATS */}
+
               <div className="mt-12 flex flex-wrap gap-8">
                 <Stat
                   icon={<Users size={16} />}
@@ -134,6 +136,7 @@ function App() {
             </motion.div>
 
             {/* RIGHT VISUAL */}
+
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -193,6 +196,7 @@ function App() {
         </div>
 
         {/* SCROLL INDICATOR */}
+
         <div className="absolute bottom-5 left-1/2 -translate-x-1/2 text-white/25">
           <ArrowDown size={18} />
         </div>
@@ -201,6 +205,7 @@ function App() {
       {/* =========================
           PROGRAMMES SECTION
       ========================== */}
+
       <section
         id="programmes"
         className="border-b border-neutral-200 bg-white"
@@ -208,6 +213,7 @@ function App() {
         <div className="mx-auto max-w-7xl px-5 py-20 md:py-28">
           <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
             {/* TEXT */}
+
             <div>
               <p className="text-[10px] font-bold tracking-[0.22em] text-orange-500">
                 OUR PROGRAMMES
@@ -226,6 +232,7 @@ function App() {
             </div>
 
             {/* CARDS */}
+
             <div className="grid gap-5 md:grid-cols-2">
               <ProgrammeCard
                 number="01"
@@ -247,6 +254,7 @@ function App() {
       {/* =========================
           REGISTRATION SECTION
       ========================== */}
+
       <section
         id="register"
         className="bg-[#f7f7f7] px-5 py-20 md:py-28"
@@ -274,25 +282,28 @@ function App() {
       {/* =========================
           FOOTER
       ========================== */}
+
       <footer className="bg-black text-white">
         <div className="mx-auto max-w-7xl px-5 py-12">
           <div className="flex flex-col justify-between gap-8 md:flex-row md:items-center">
             {/* BRAND */}
+
             <div>
               <BrandLogo dark />
 
               <p className="mt-4 max-w-sm text-xs leading-6 text-white/35">
-                Practical knowledge. Real opportunities. A community built
-                for growth.
+                A network of Real Estate Millionaires
               </p>
             </div>
 
             {/* SOCIAL ICONS */}
+
             <div className="flex gap-3">
               {/* INSTAGRAM */}
+
               <SocialIcon
-                url="https://www.instagram.com/globaliconrealtor/"
-                bgColor="#f97316"
+                url="https://www.instagram.com/globaliconrealtorsgroup?stkn=YTJ3b2g4dmpnd2Fl"
+                bgColor="#E4405F"
                 fgColor="#ffffff"
                 style={{
                   width: 40,
@@ -302,24 +313,11 @@ function App() {
                 rel="noopener noreferrer"
                 aria-label="Follow Global Icon on Instagram"
               />
-
-              {/* LINKEDIN */}
-              <SocialIcon
-                url="https://www.linkedin.com/"
-                bgColor="#f97316"
-                fgColor="#ffffff"
-                style={{
-                  width: 40,
-                  height: 40,
-                }}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Global Icon on LinkedIn"
-              />
             </div>
           </div>
 
           {/* COPYRIGHT */}
+
           <div className="mt-10 border-t border-white/10 pt-6 text-[10px] text-white/25">
             © {new Date().getFullYear()} Global Icon. All rights reserved.
           </div>
@@ -331,7 +329,7 @@ function App() {
 
 /* =========================
    STAT COMPONENT
-========================= */
+========================== */
 
 function Stat({ icon, value, label }) {
   return (
@@ -355,7 +353,7 @@ function Stat({ icon, value, label }) {
 
 /* =========================
    PROGRAMME CARD
-========================= */
+========================== */
 
 function ProgrammeCard({
   number,
@@ -373,12 +371,10 @@ function ProgrammeCard({
           : "border-neutral-200 bg-neutral-50 text-neutral-950"
       }`}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex items-start justify-between">
         <span
           className={`font-oswald text-4xl ${
-            featured
-              ? "text-white/30"
-              : "text-neutral-200"
+            featured ? "text-white/30" : "text-neutral-200"
           }`}
         >
           {number}
