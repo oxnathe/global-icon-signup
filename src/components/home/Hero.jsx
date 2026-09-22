@@ -1,326 +1,373 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { motion } from "framer-motion";
+
 import {
   ArrowRight,
-  BedDouble,
-  Bath,
-  MapPin,
+  ChevronDown,
   Search,
-  Sparkles,
+  Trophy,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+
+import { useCurrency } from "../../context/CurrencyContext";
+
+const purposes = ["Shortlet", "Buy", "Rent / Lease"];
+
+const propertyTypes = [
+  "All Properties",
+  "Apartment",
+  "Detached Duplex",
+  "Duplex",
+  "Terrace",
+  "Land",
+];
+
+const awards = [
+  {
+    title: "Top Real Estate Agency",
+    location: "Lagos 2024",
+  },
+  {
+    title: "Excellence in Property Sales",
+    location: "Nigeria 2023",
+  },
+  {
+    title: "Trusted Real Estate Partner",
+    location: "West Africa 2023",
+  },
+];
 
 function Hero() {
+  const navigate = useNavigate();
+
+  const [purpose, setPurpose] = useState("Buy");
+  const [propertyType, setPropertyType] =
+    useState("All Properties");
+  const [location, setLocation] = useState("");
+
+  const { currency } = useCurrency();
+
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+
+    if (location.trim()) {
+      params.set("search", location.trim());
+    }
+
+    if (purpose) {
+      params.set("purpose", purpose);
+    }
+
+    if (
+      propertyType &&
+      propertyType !== "All Properties"
+    ) {
+      params.set("type", propertyType);
+    }
+
+    navigate(
+      `/properties${
+        params.toString()
+          ? `?${params.toString()}`
+          : ""
+      }`
+    );
+  };
+
   return (
-    <section className="relative min-h-[calc(100vh-80px)] overflow-hidden bg-[#080808] text-white">
-      {/* Background atmosphere */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-40 top-20 h-96 w-96 rounded-full bg-[#F29925]/10 blur-3xl" />
+    <section className="relative min-h-screen overflow-hidden bg-[#071522] font-poppins text-white">
+      <div className="absolute inset-0">
+        <img
+          src="/images/hero/hero-property.webp"
+          alt="Global Icon Realtors Lagos skyline"
+          className="h-full w-full object-cover"
+        />
 
-        <div className="absolute right-[-10%] top-[-10%] h-[520px] w-[520px] rounded-full bg-[#F29925]/8 blur-3xl" />
+        <div className="absolute inset-0 bg-black/25" />
 
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:80px_80px] opacity-40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#061827]/90 via-[#071b2c]/55 to-transparent" />
+
+        <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-[#061827]/80 to-transparent" />
+
+        <div className="absolute inset-x-0 bottom-0 h-80 bg-gradient-to-t from-[#061827]/90 via-[#061827]/40 to-transparent" />
       </div>
 
-      {/* Main hero */}
-      <div className="relative mx-auto flex min-h-[calc(100vh-80px)] max-w-7xl items-center px-5 py-16 sm:px-8 lg:px-10 lg:py-20">
-        <div className="grid w-full items-center gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-10">
-          {/* LEFT CONTENT */}
-          <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative z-10"
-          >
-            {/* Eyebrow */}
-            <div className="mb-7 flex items-center gap-3">
-              <span className="h-px w-10 bg-[#F29925]" />
-
-              <span className="font-montserrat text-[10px] font-bold uppercase tracking-[0.3em] text-[#F29925]">
-                Global Icon Realtors
-              </span>
-            </div>
-
-            {/* Main heading */}
-            <h1 className="max-w-3xl font-oswald text-[clamp(3.8rem,8vw,7.6rem)] font-medium uppercase leading-[0.86] tracking-[-0.045em]">
-              Find a place
-              <br />
-
-              <span className="text-white/95">that feels</span>
-              <br />
-
-              <span className="text-[#F29925]">like yours.</span>
-            </h1>
-
-            {/* Description */}
-            <p className="mt-8 max-w-xl text-sm leading-7 text-white/55 sm:text-base">
-              Discover exceptional homes, premium spaces and property
-              opportunities carefully selected for modern living and long-term
-              value across Lagos.
-            </p>
-
-            {/* Buttons */}
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Link
-                to="/properties"
-                className="group inline-flex h-14 items-center justify-center gap-3 bg-[#F29925] px-7 text-xs font-bold uppercase tracking-[0.14em] text-black transition-all duration-300 hover:bg-white"
-              >
-                Explore Properties
-
-                <ArrowRight
-                  size={17}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </Link>
-
-              <Link
-                to="/contact"
-                className="inline-flex h-14 items-center justify-center border border-white/15 px-7 text-xs font-bold uppercase tracking-[0.14em] text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
-              >
-                Talk to Us
-              </Link>
-            </div>
-
-            {/* Bottom credibility row */}
-            <div className="mt-12 flex flex-wrap items-center gap-x-7 gap-y-4 border-t border-white/10 pt-6">
-              <div>
-                <p className="font-oswald text-2xl text-white">LAGOS</p>
-                <p className="mt-1 text-[9px] uppercase tracking-[0.2em] text-white/35">
-                  Property Focus
-                </p>
-              </div>
-
-              <div className="h-8 w-px bg-white/10" />
-
-              <div>
-                <p className="font-oswald text-2xl text-white">BUY</p>
-                <p className="mt-1 text-[9px] uppercase tracking-[0.2em] text-white/35">
-                  Property
-                </p>
-              </div>
-
-              <div>
-                <p className="font-oswald text-2xl text-white">RENT</p>
-                <p className="mt-1 text-[9px] uppercase tracking-[0.2em] text-white/35">
-                  Property
-                </p>
-              </div>
-
-              <div>
-                <p className="font-oswald text-2xl text-white">INVEST</p>
-                <p className="mt-1 text-[9px] uppercase tracking-[0.2em] text-white/35">
-                  Opportunities
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* RIGHT VISUAL */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96, x: 30 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{
-              duration: 1,
-              delay: 0.15,
-              ease: "easeOut",
-            }}
-            className="relative min-h-[520px] sm:min-h-[620px]"
-          >
-            {/* Main image frame */}
-            <div className="absolute inset-x-0 top-0 h-[78%] overflow-hidden sm:left-[7%]">
-              <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-
-              <img
-                src="/images/hero/hero-property.jpg"
-                alt="Luxury property represented by Global Icon Realtors"
-                className="h-full w-full object-cover transition-transform duration-[2000ms] hover:scale-105"
-              />
-
-              {/* Image number */}
-              <div className="absolute left-5 top-5 z-20 flex items-center gap-3">
-                <span className="flex h-9 w-9 items-center justify-center border border-white/25 bg-black/20 text-[10px] font-bold backdrop-blur-sm">
-                  01
-                </span>
-
-                <span className="text-[9px] font-semibold uppercase tracking-[0.25em] text-white/80">
-                  Featured Property
-                </span>
-              </div>
-
-              {/* Vertical label */}
-              <div className="absolute bottom-6 right-5 z-20 hidden [writing-mode:vertical-rl] sm:block">
-                <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-white/60">
-                  Global Icon Collection
-                </span>
-              </div>
-            </div>
-
-            {/* Floating property card */}
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-[1400px] flex-col px-5 pb-7 pt-[95px] sm:px-8 lg:px-12">
+        <div className="flex flex-1 items-center">
+          <div className="grid w-full items-center gap-12 lg:grid-cols-[1fr_0.75fr]">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.7,
-                delay: 0.7,
-                ease: "easeOut",
-              }}
-              className="absolute bottom-0 left-0 z-30 w-[88%] max-w-[430px] bg-white p-6 text-black shadow-2xl sm:left-0 sm:p-7"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <div className="mb-3 flex items-center gap-2">
-                    <Sparkles size={13} className="text-[#F29925]" />
-
-                    <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-black/45">
-                      Featured Residence
-                    </span>
-                  </div>
-
-                  <h2 className="font-oswald text-2xl font-medium uppercase leading-none sm:text-3xl">
-                    Modern Lagos Residence
-                  </h2>
-                </div>
-
-                <span className="shrink-0 bg-[#080808] px-3 py-2 text-[9px] font-bold uppercase tracking-wider text-white">
-                  New
-                </span>
-              </div>
-
-              <div className="mt-5 flex items-center gap-2 text-xs text-black/50">
-                <MapPin size={14} className="text-[#F29925]" />
-                <span>Lekki, Lagos</span>
-              </div>
-
-              <div className="mt-5 flex flex-wrap items-center gap-5 border-t border-black/10 pt-5">
-                <div className="flex items-center gap-2">
-                  <BedDouble size={15} className="text-black/45" />
-                  <span className="text-xs font-medium">4 Beds</span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <Bath size={15} className="text-black/45" />
-                  <span className="text-xs font-medium">4 Baths</span>
-                </div>
-
-                <div className="ml-auto">
-                  <p className="text-[8px] font-bold uppercase tracking-widest text-black/35">
-                    Enquire
-                  </p>
-
-                  <p className="mt-0.5 font-oswald text-lg">
-                    Contact for price
-                  </p>
-                </div>
-              </div>
-
-              <Link
-                to="/properties"
-                className="group mt-6 flex items-center justify-between border-t border-black/10 pt-5 text-[10px] font-bold uppercase tracking-[0.16em]"
-              >
-                <span>View Property Collection</span>
-
-                <span className="flex h-9 w-9 items-center justify-center bg-[#F29925] transition-transform duration-300 group-hover:translate-x-1">
-                  <ArrowRight size={15} />
-                </span>
-              </Link>
-            </motion.div>
-
-            {/* Floating location badge */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
+              initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{
-                duration: 0.6,
-                delay: 0.9,
+                duration: 0.8,
+                ease: "easeOut",
               }}
-              className="absolute right-0 top-[54%] z-30 hidden border border-white/15 bg-black/70 px-5 py-4 backdrop-blur-xl sm:block"
+              className="max-w-2xl"
             >
-              <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 items-center justify-center bg-[#F29925] text-black">
-                  <MapPin size={16} />
+              <div className="mb-6 flex items-center gap-4">
+                <span className="h-px w-12 bg-[#F29925]" />
+
+                <span className="font-oswald text-[10px] font-bold uppercase tracking-[0.28em] text-[#F29925] sm:text-[11px]">
+                  Premium Real Estate Solutions
+                </span>
+              </div>
+
+              <h1 className="font-montserrat text-[clamp(3.2rem,6.3vw,6.8rem)] font-semibold leading-[0.94] tracking-[-0.055em]">
+                <span className="block">
+                  Find a place
+                </span>
+
+                <span className="block">
+                  that feels{" "}
+                  <span className="font-light italic text-[#F29925]">
+                    like yours.
+                  </span>
+                </span>
+              </h1>
+
+              <p className="mt-7 max-w-xl font-poppins text-sm leading-6 text-white/75 sm:text-base sm:leading-7">
+                Discover exceptional homes, premium spaces
+                and property opportunities carefully selected
+                for modern living and long-term value across
+                Lagos.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.2,
+                ease: "easeOut",
+              }}
+              className="hidden lg:flex lg:justify-end"
+            >
+              <div className="w-full max-w-[470px]">
+                <div className="mb-7 flex items-center justify-end gap-4">
+                  <span className="font-oswald text-[10px] font-bold uppercase tracking-[0.25em] text-white/85">
+                    Our Awards & Recognition
+                  </span>
+
+                  <span className="h-px w-20 bg-[#F29925]/70" />
                 </div>
 
-                <div>
-                  <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/35">
-                    Location
-                  </p>
+                <div className="grid grid-cols-3 gap-6">
+                  {awards.map((award) => (
+                    <div
+                      key={award.title}
+                      className="text-center"
+                    >
+                      <div className="relative mx-auto mb-3 flex h-16 w-16 items-center justify-center">
+                        <div className="absolute inset-0 rounded-full border border-[#F29925]/70" />
 
-                  <p className="mt-1 text-xs font-semibold text-white">
-                    Lagos, Nigeria
-                  </p>
+                        <div className="absolute inset-2 rounded-full border border-[#F29925]/30" />
+
+                        <Trophy
+                          size={23}
+                          strokeWidth={1.4}
+                          className="text-[#F29925]"
+                        />
+                      </div>
+
+                      <p className="font-oswald text-[8px] font-semibold uppercase leading-4 text-white sm:text-[9px]">
+                        {award.title}
+                      </p>
+
+                      <p className="mt-2 font-poppins text-[7px] uppercase tracking-[0.18em] text-white/50 sm:text-[8px]">
+                        {award.location}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </motion.div>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Search / discovery panel */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 0.7,
-          delay: 1,
-          ease: "easeOut",
-        }}
-        className="relative z-40 mx-auto -mt-4 max-w-7xl px-5 pb-8 sm:px-8 lg:px-10"
-      >
-        <div className="border border-white/10 bg-white/[0.07] p-4 backdrop-blur-2xl sm:p-5">
-          <div className="grid gap-3 md:grid-cols-[1.1fr_1fr_1fr_1fr_auto]">
-            <div className="flex min-h-[62px] items-center gap-3 border border-white/10 bg-black/30 px-4">
-              <Search size={17} className="shrink-0 text-[#F29925]" />
-
-              <div>
-                <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/30">
-                  Discover
-                </p>
-
-                <p className="mt-1 text-xs font-medium text-white">
-                  Find your next property
-                </p>
-              </div>
-            </div>
-
-            <div className="flex min-h-[62px] flex-col justify-center border border-white/10 bg-black/30 px-4">
-              <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/30">
-                Purpose
-              </span>
-
-              <span className="mt-1 text-xs font-medium text-white">
-                Buy or Rent
-              </span>
-            </div>
-
-            <div className="flex min-h-[62px] flex-col justify-center border border-white/10 bg-black/30 px-4">
-              <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/30">
-                Location
-              </span>
-
-              <span className="mt-1 text-xs font-medium text-white">
-                Lagos
-              </span>
-            </div>
-
-            <div className="flex min-h-[62px] flex-col justify-center border border-white/10 bg-black/30 px-4">
-              <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/30">
-                Property Type
-              </span>
-
-              <span className="mt-1 text-xs font-medium text-white">
-                All Properties
-              </span>
-            </div>
-
-            <Link
-              to="/properties"
-              className="flex min-h-[62px] items-center justify-center gap-2 bg-[#F29925] px-6 text-[10px] font-bold uppercase tracking-[0.15em] text-black transition hover:bg-white"
-            >
-              Search
-              <ArrowRight size={15} />
-            </Link>
           </div>
         </div>
-      </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.8,
+            delay: 0.45,
+            ease: "easeOut",
+          }}
+          className="relative z-30"
+        >
+          <div className="rounded-[24px] border border-white/25 bg-[#071522]/90 p-3 shadow-2xl backdrop-blur-xl sm:rounded-[28px] sm:p-4">
+            <div className="grid lg:grid-cols-[1.5fr_1fr_1fr_auto]">
+              {/* DISCOVER */}
+              <div className="flex min-h-[66px] items-center gap-4 border-b border-white/10 px-4 sm:px-5 lg:border-b-0 lg:border-r">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/20">
+                  <Search
+                    size={19}
+                    strokeWidth={1.7}
+                    className="text-white"
+                  />
+                </div>
+
+                <label className="min-w-0 flex-1">
+                  <span className="block font-oswald text-[8px] font-bold uppercase tracking-[0.2em] text-white/45">
+                    Discover
+                  </span>
+
+                  <input
+                    type="text"
+                    value={location}
+                    onChange={(event) =>
+                      setLocation(event.target.value)
+                    }
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        handleSearch();
+                      }
+                    }}
+                    placeholder="Search by location, property or keyword..."
+                    className="mt-1 w-full bg-transparent font-poppins text-xs text-white outline-none placeholder:text-white/45"
+                  />
+                </label>
+              </div>
+
+              {/* PURPOSE */}
+              <div className="flex min-h-[66px] items-center gap-4 border-b border-white/10 px-4 sm:px-5 lg:border-b-0 lg:border-r">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/20">
+                  <span className="text-lg text-[#F29925]">
+                    ⌂
+                  </span>
+                </div>
+
+                <div className="min-w-0 flex-1">
+                  <label className="block font-oswald text-[8px] font-bold uppercase tracking-[0.2em] text-white/45">
+                    Purpose
+                  </label>
+
+                  <select
+                    value={purpose}
+                    onChange={(event) =>
+                      setPurpose(event.target.value)
+                    }
+                    className="mt-1 w-full cursor-pointer bg-transparent font-poppins text-xs font-semibold text-white outline-none"
+                  >
+                    {purposes.map((item) => (
+                      <option
+                        key={item}
+                        value={item}
+                        className="bg-[#071522] text-white"
+                      >
+                        {item}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <ChevronDown
+                  size={15}
+                  className="pointer-events-none shrink-0 text-white/50"
+                />
+              </div>
+
+              {/* PROPERTY TYPE */}
+              <div className="flex min-h-[66px] items-center gap-4 border-b border-white/10 px-4 sm:px-5 lg:border-b-0 lg:border-r">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/20">
+                  <span className="text-lg text-[#F29925]">
+                    ▦
+                  </span>
+                </div>
+
+                <div className="min-w-0 flex-1">
+                  <label className="block font-oswald text-[8px] font-bold uppercase tracking-[0.2em] text-white/45">
+                    Property Type
+                  </label>
+
+                  <select
+                    value={propertyType}
+                    onChange={(event) =>
+                      setPropertyType(event.target.value)
+                    }
+                    className="mt-1 w-full cursor-pointer bg-transparent font-poppins text-xs font-semibold text-white outline-none"
+                  >
+                    {propertyTypes.map((type) => (
+                      <option
+                        key={type}
+                        value={type}
+                        className="bg-[#071522] text-white"
+                      >
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <ChevronDown
+                  size={15}
+                  className="pointer-events-none shrink-0 text-white/50"
+                />
+              </div>
+
+              {/* SEARCH BUTTON */}
+              <button
+                type="button"
+                onClick={handleSearch}
+                className="group m-1 flex min-h-[62px] items-center justify-center gap-3 rounded-full bg-[#F29925] px-8 font-oswald text-[10px] font-bold uppercase tracking-[0.18em] text-black transition duration-300 hover:bg-white"
+              >
+                Search
+
+                <ArrowRight
+                  size={16}
+                  className="transition-transform duration-300 group-hover:translate-x-1"
+                />
+              </button>
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="mt-4 flex items-center justify-between lg:hidden">
+          <div className="flex items-center gap-2">
+            {awards.map((award) => (
+              <div
+                key={award.title}
+                title={award.title}
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-[#F29925]/60"
+              >
+                <Trophy
+                  size={13}
+                  className="text-[#F29925]"
+                />
+              </div>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-2 rounded-full border border-white/25 bg-black/20 px-4 py-2 font-oswald text-[10px] font-bold uppercase backdrop-blur-md">
+            <span className="text-[#F29925]">
+              {currency === "USD" ? "$" : "₦"}
+            </span>
+
+            {currency}
+          </div>
+        </div>
+
+        <div className="flex justify-center pt-4">
+          <div className="flex flex-col items-center gap-2 font-oswald text-[8px] font-bold uppercase tracking-[0.3em] text-white/65">
+            <div className="flex h-8 w-5 items-start justify-center rounded-full border border-white/60 p-1">
+              <motion.div
+                animate={{
+                  y: [0, 9, 0],
+                }}
+                transition={{
+                  duration: 1.6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="h-2 w-1 rounded-full bg-white"
+              />
+            </div>
+
+            Scroll Down
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

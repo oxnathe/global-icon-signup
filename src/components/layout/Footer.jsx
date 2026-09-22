@@ -1,14 +1,30 @@
 import { Link } from "react-router-dom";
+
 import { Phone, Mail, MapPin } from "lucide-react";
+
 import { SocialIcon } from "react-social-icons";
 
 function Footer() {
+  const handlePageTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const instagramUrl =
+    "https://www.instagram.com/globaliconrealtorsgroup?stkn=YTJ3b2g4dmpnd2Fl";
+
   return (
     <footer className="bg-[#080808] text-white">
       <div className="mx-auto max-w-7xl px-5 py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
-            <Link to="/" className="inline-block">
+            <Link
+              to="/"
+              onClick={handlePageTop}
+              className="inline-block"
+            >
               <span className="font-oswald text-3xl font-semibold uppercase tracking-tight">
                 Global Icon
                 <span className="text-[#F29925]"> Realtors</span>
@@ -21,13 +37,13 @@ function Footer() {
             </p>
 
             <a
-              href="https://www.instagram.com/globaliconrealtorsgroup?stkn=YTJ3b2g4dmpnd2Fl"
+              href={instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-6 inline-flex items-center gap-3 text-sm text-white/60 transition hover:text-[#F29925]"
             >
               <SocialIcon
-                url="https://www.instagram.com/globaliconrealtorsgroup?stkn=YTJ3b2g4dmpnd2Fl"
+                url={instagramUrl}
                 bgColor="#E4405F"
                 fgColor="#ffffff"
                 style={{
@@ -48,6 +64,7 @@ function Footer() {
             <div className="mt-5 flex flex-col gap-3">
               <Link
                 to="/"
+                onClick={handlePageTop}
                 className="text-sm text-white/55 transition hover:text-white"
               >
                 Home
@@ -55,6 +72,7 @@ function Footer() {
 
               <Link
                 to="/properties"
+                onClick={handlePageTop}
                 className="text-sm text-white/55 transition hover:text-white"
               >
                 Properties
@@ -62,6 +80,7 @@ function Footer() {
 
               <Link
                 to="/about"
+                onClick={handlePageTop}
                 className="text-sm text-white/55 transition hover:text-white"
               >
                 About
@@ -69,6 +88,7 @@ function Footer() {
 
               <Link
                 to="/contact"
+                onClick={handlePageTop}
                 className="text-sm text-white/55 transition hover:text-white"
               >
                 Contact
@@ -76,9 +96,10 @@ function Footer() {
 
               <Link
                 to="/register"
+                onClick={handlePageTop}
                 className="text-sm text-white/55 transition hover:text-white"
               >
-                Register
+                Become a Realtor
               </Link>
             </div>
           </div>
@@ -105,10 +126,10 @@ function Footer() {
                 />
 
                 <a
-                  href="tel:+2349019028248"
+                  href="tel:+2347065114147"
                   className="transition hover:text-white"
                 >
-                  +234 901 902 8248
+                  +234 706 511 4147
                 </a>
               </div>
 

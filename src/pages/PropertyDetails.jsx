@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+
 import {
   ArrowLeft,
   Bath,
@@ -7,10 +8,27 @@ import {
   Maximize,
   MapPin,
 } from "lucide-react";
+
 import properties from "../data/properties";
+import { useCurrency } from "../context/CurrencyContext";
+
+const NGN_PER_USD = 1330;
+
+function formatPrice(price, currency) {
+  if (currency === "USD") {
+    const usdPrice = price / NGN_PER_USD;
+
+    return `$${usdPrice.toLocaleString("en-US", {
+      maximumFractionDigits: 0,
+    })}`;
+  }
+
+  return `₦${price.toLocaleString("en-NG")}`;
+}
 
 function PropertyDetails() {
   const { propertyId } = useParams();
+  const { currency } = useCurrency();
 
   const property = properties.find(
     (item) => String(item.id) === String(propertyId)
@@ -85,14 +103,18 @@ function PropertyDetails() {
             </div>
 
             <p className="mt-7 font-oswald text-3xl text-[#F29925]">
-              ₦{property.price.toLocaleString("en-NG")}
+              {formatPrice(property.price, currency)}
             </p>
 
             <div className="mt-7 grid grid-cols-2 gap-3">
               {property.bedrooms > 0 && (
                 <div className="rounded-xl bg-neutral-50 p-4">
                   <BedDouble size={18} className="text-[#F29925]" />
-                  <p className="mt-2 text-xs text-neutral-400">Bedrooms</p>
+
+                  <p className="mt-2 text-xs text-neutral-400">
+                    Bedrooms
+                  </p>
+
                   <p className="mt-1 font-semibold">
                     {property.bedrooms}
                   </p>
@@ -102,7 +124,11 @@ function PropertyDetails() {
               {property.bathrooms > 0 && (
                 <div className="rounded-xl bg-neutral-50 p-4">
                   <Bath size={18} className="text-[#F29925]" />
-                  <p className="mt-2 text-xs text-neutral-400">Bathrooms</p>
+
+                  <p className="mt-2 text-xs text-neutral-400">
+                    Bathrooms
+                  </p>
+
                   <p className="mt-1 font-semibold">
                     {property.bathrooms}
                   </p>
@@ -111,14 +137,26 @@ function PropertyDetails() {
 
               <div className="rounded-xl bg-neutral-50 p-4">
                 <Maximize size={18} className="text-[#F29925]" />
-                <p className="mt-2 text-xs text-neutral-400">Size</p>
-                <p className="mt-1 font-semibold">{property.area}</p>
+
+                <p className="mt-2 text-xs text-neutral-400">
+                  Size
+                </p>
+
+                <p className="mt-1 font-semibold">
+                  {property.area}
+                </p>
               </div>
 
               <div className="rounded-xl bg-neutral-50 p-4">
                 <CheckCircle2 size={18} className="text-[#F29925]" />
-                <p className="mt-2 text-xs text-neutral-400">Type</p>
-                <p className="mt-1 font-semibold">{property.type}</p>
+
+                <p className="mt-2 text-xs text-neutral-400">
+                  Type
+                </p>
+
+                <p className="mt-1 font-semibold">
+                  {property.type}
+                </p>
               </div>
             </div>
 

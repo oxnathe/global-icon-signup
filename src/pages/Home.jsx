@@ -1,6 +1,7 @@
 import Hero from "../components/home/Hero";
 import Achievements from "../components/home/Achievements";
 import FeaturedProperties from "../components/home/FeaturedProperties";
+import CEOSection from "../components/home/CEOSection";
 import PropertyTypes from "../components/home/PropertyTypes";
 import Locations from "../components/home/Locations";
 import WhyChooseUs from "../components/home/WhyChooseUs";
@@ -13,6 +14,7 @@ function Home() {
       <Hero />
       <Achievements />
       <FeaturedProperties />
+      <CEOSection />
       <PropertyTypes />
       <Locations />
       <WhyChooseUs />

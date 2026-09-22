@@ -16,9 +16,12 @@ import "@fontsource/oswald/600.css";
 
 import "./index.css";
 import App from "./App.jsx";
+import { CurrencyProvider } from "./context/CurrencyContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
+    <CurrencyProvider>
+      <App />
+    </CurrencyProvider>
   </React.StrictMode>
 );
